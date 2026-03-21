@@ -1,42 +1,35 @@
-const babelParser = require('@babel/eslint-parser');
-const eslintImportErrors = require('eslint-plugin-import/config/errors');
-const eslintRecommended = require('@eslint/js/src/configs/eslint-recommended');
-const eslintImportWarnings = require('eslint-plugin-import/config/warnings');
+const tsParser = require('@typescript-eslint/parser');
+const tsPlugin = require('@typescript-eslint/eslint-plugin');
+const eslintRecommended = require('@eslint/js').configs.recommended;
 const globals = require('globals');
 
 module.exports = [
   eslintRecommended,
   {
-    ignores: ['**/*.config.js', '.prettierrc.js'],
+    ignores: ['dist/**', 'node_modules/**', '**/*.config.js', '.prettierrc.js'],
   },
   {
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.mjs'],
-        },
-      },
-    },
+    files: ['src/**/*.ts'],
     languageOptions: {
+      parser: tsParser,
       globals: {
-        ...globals.browser,
-        browser: true,
-        ...globals.es2017,
-        es2017: true,
         ...globals.node,
-        node: true,
+        ...globals.es2021,
       },
-      ecmaVersion: 2017,
-      parser: babelParser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
-    plugins: [eslintImportErrors, eslintImportWarnings],
-    files: ['src/**/*.js'],
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
     rules: {
+      ...tsPlugin.configs.recommended.rules,
       indent: ['error', 2],
       'linebreak-style': ['error', 'unix'],
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
-      'no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
 ];

@@ -4,7 +4,7 @@ services:
     container_name: portfolio-ws
     restart: always
     ports:
-      - 5000:5000
+      - 5010:5010
     env_file:
       - ${HOME}/secrets/.env
     volumes:

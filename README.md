@@ -3,19 +3,16 @@
 ## Features and technologies used
 
 - NodeJS 22
-- [expressjs](https://github.com/expressjs/express) - The server for handling and routing HTTP requests. It is a backend framework for Node.js.
-- [nodemailer](https://github.com/nodemailer/nodemailer) - Is a module for Node.js applications to allow easy as cake email sending
+- [Fastify v5](https://fastify.dev/) - Extremely fast and low overhead web framework.
+- [nodemailer](https://github.com/nodemailer/nodemailer) - Module for Node.js applications to allow easy as cake email sending
 - SQLite database
-- SQL database implementation with **[Sequelize v6](https://sequelize.org/docs/v6/)** ORM
-- Caching with Redis
-- dotenv module for setting environment
-- Implemented [sentry](https://sentry.io) error tracking and monitoring
-- Production ready Dockerfile
-- Linting with Eslint 8
-- Format code with Prettier
-- ES6+ features with babel (including es6 import/export feature)
-- Transpile with Babel 7
-- Include JWT authentication
+- SQL database implementation with **[Sequelize v6](https://sequelize.org/docs/v6/)** and **[sequelize-typescript](https://github.com/sequelize/sequelize-typescript)**
+- [Fastify JSON Schema Validation](https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/) - High-performance native validation
+- Implemented [sentry](https://sentry.io) error tracking and monitoring (v10)
+- Production ready Multi-stage Dockerfile
+- Linting with [ESLint 9](https://eslint.org/) and TypeScript Support
+- Fully migrated to **TypeScript**
+- Modular **Plugin-based Architecture**
 - Logging with [Pino](https://www.npmjs.com/package/pino)
 
 ## Api Documentation
@@ -28,7 +25,7 @@ You can also discover the interactive documentation by going to `/api-docs` when
 
 This project is compatible with sql-based databases. You can change default dialect (sqlite) in anytime.
 To do this, firstly select your database from the table below.
-Modify `dialect` property in `src/config/sequelize.js` and install required npm package(s) for this database.
+Modify `dialect` property in `src/config/sequelize.ts` and install required npm package(s) for this database.
 
 For more info, visit [sequelize docs](https://sequelize.org/docs/v6/other-topics/dialect-specific-things/)
 
@@ -58,12 +55,18 @@ npm install
 
 3. Modify .env.local file.
 
-4. Finally, in the project directory, you can run: your app will run successfully with **npm run start:dev** command
-
-Or `npm start`
+4. Finally, in the project directory, you can run: your app will run successfully with **npm run start:dev** command (using `tsx` for hot-reloading).
+5. For production, generate a build first:
+```bash
+npm run build
+```
+Then start the server:
+```bash
+npm start
+```
 
 Runs the app in the development mode.\
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+Open [http://localhost:5010](http://localhost:5010) to view it in the browser.
 
 ## Deployment with docker
 
@@ -81,7 +84,7 @@ docker pull alexjcm/portfolio-ws
 Start container:
 Use --network host so that the container can connect to Redis:
 ```bash
-docker run --restart always -d -p 5000:5000 \
+docker run --restart always -d -p 5010:5010 \
 --network host -v ${HOME}/data:/app/data --name portfolio-ws \
 --env-file $HOME/secrets/portfolio-ws/.env alexjcm/portfolio-ws
 ```

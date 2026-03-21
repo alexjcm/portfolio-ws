@@ -1,11 +1,10 @@
-import jwt from 'jsonwebtoken';
-import logger from '../logger/logger';
+import jwt, { SignOptions } from 'jsonwebtoken';
 
 const secretOrPrivateKey = process.env.JWT_SECRET_KEY || 'your-secret';
 
-export const generateToken = (payload, expiresIn = '1h') => {
+export const generateToken = (payload: string | object | Buffer, expiresIn: string | number = '1h'): string => {
   const issuer = 'portfolio-ws';
-  const options = {
+  const options: SignOptions = {
     expiresIn,
     issuer,
   };
@@ -13,13 +12,12 @@ export const generateToken = (payload, expiresIn = '1h') => {
   return jwt.sign(payload, secretOrPrivateKey, options);
 };
 
-export const verifyToken = (token) => {
+export const verifyToken = (token: string): Promise<any> => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secretOrPrivateKey, (err, decoded) => {
       if (err) {
         reject('Failed to authenticate token.');
       } else {
-        logger.info(decoded, 'decoded:');
         resolve(decoded);
       }
     });
