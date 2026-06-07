@@ -5,7 +5,7 @@ const secretOrPrivateKey = process.env.JWT_SECRET_KEY || 'your-secret';
 export const generateToken = (payload: string | object | Buffer, expiresIn: string | number = '1h'): string => {
   const issuer = 'portfolio-ws';
   const options: SignOptions = {
-    expiresIn,
+    expiresIn: expiresIn as any,
     issuer,
   };
 

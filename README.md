@@ -2,7 +2,7 @@
 
 ## Features and technologies used
 
-- NodeJS 22
+- NodeJS 24
 - [Fastify v5](https://fastify.dev/) - Extremely fast and low overhead web framework.
 - [nodemailer](https://github.com/nodemailer/nodemailer) - Module for Node.js applications to allow easy as cake email sending
 - SQLite database
@@ -10,7 +10,7 @@
 - [Fastify JSON Schema Validation](https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/) - High-performance native validation
 - Implemented [sentry](https://sentry.io) error tracking and monitoring (v10)
 - Production ready Multi-stage Dockerfile
-- Linting with [ESLint 9](https://eslint.org/) and TypeScript Support
+- Linting with [ESLint](https://eslint.org/) and TypeScript Support
 - Fully migrated to **TypeScript**
 - Modular **Plugin-based Architecture**
 - Logging with [Pino](https://www.npmjs.com/package/pino)
